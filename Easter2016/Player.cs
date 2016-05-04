@@ -13,7 +13,8 @@ namespace Easter2016
         MouseState previousMouseState;
         int AllowedCannonBalls = 2;  
         
-        public Player(Game g, string SpriteName, Vector2 StartPosition) : base(g,SpriteName,StartPosition)
+        public Player(Game g, string SpriteName, Vector2 StartPosition) 
+                        : base(g,SpriteName,StartPosition)
         {
             Active = true;
             speed = 5.0f;
@@ -27,7 +28,8 @@ namespace Easter2016
         public bool firing()
         {
             var fireCount = Game.Components.OfType<SimpleSprite>()
-                .Where(s => !s.Stopped() && s.Name == "cannonball").ToList().Count();
+                .Where(s => !s.Stopped() && s.Name == "cannonball")
+                .ToList().Count();
 
             if (fireCount > AllowedCannonBalls)
                 return true;
@@ -59,7 +61,8 @@ namespace Easter2016
                 LoadedGameContent.Textures[Name].Height));
 
             if (!firing() && currentMouseState.LeftButton == ButtonState.Released
-                && previousMouseState.LeftButton == ButtonState.Pressed && Game.GraphicsDevice.Viewport.Bounds.Contains(currentMouseState.Position))
+                && previousMouseState.LeftButton == ButtonState.Pressed 
+                && Game.GraphicsDevice.Viewport.Bounds.Contains(currentMouseState.Position))
             {
                SimpleSprite cannonball = 
                     new SimpleSprite(Game, 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Audio;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,11 +10,13 @@ using System.Text;
 
 namespace Easter2016
 {
-    public static class LoadedGameContent
+    public static class LoadedGameContent 
     {
         public static Dictionary<string, Texture2D> Textures = new Dictionary<string, Texture2D>();
         public static Dictionary<string, SpriteFont> Fonts = new Dictionary<string, SpriteFont>();
         public static Dictionary<string, SoundEffect> Sounds = new Dictionary<string, SoundEffect>();
+
+        
 
         public static Dictionary<String, T> ContentLoad<T>(ContentManager Content, string contentFolder)
         {

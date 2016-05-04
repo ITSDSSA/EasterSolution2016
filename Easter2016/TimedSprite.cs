@@ -75,7 +75,7 @@ namespace Easter2016
             {
                 SpriteBatch sp = Game.Services.GetService<SpriteBatch>();
                 sp.Begin();
-                sp.Draw(LoadedGameContent.Textures[Name], CurrentPosition, Color.White);
+                sp.Draw(LoadedGameContent.Textures[Name], CurrentPosition, Color.Red);
                 sp.End();
             }
 
