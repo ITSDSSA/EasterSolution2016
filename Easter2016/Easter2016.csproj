@@ -39,10 +39,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />
+    <Compile Include="HealthBar.cs" />
     <Compile Include="LoadGameContent.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="SimpleSprite.cs" />
     <Compile Include="SimpleSpriteManager.cs" />
     <Compile Include="TimedSprite.cs" />
@@ -57,14 +63,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Background scene1.jpg" />
+    <Content Include="Content\Background scene2.png" />
     <Content Include="Content\Backing track wav.wav" />
     <Content Include="Content\Black Knight.png" />
     <Content Include="Content\cannon fire.wav" />
     <Content Include="Content\cannonball.png" />
     <Content Include="Content\End Tower.png" />
     <Content Include="Content\Impact.wav" />
+    <Content Include="Content\islandicon_wogc.png" />
+    <Content Include="Content\looser.jpg" />
+    <Content Include="Content\lose.wav" />
+    <Content Include="Content\mini Black Knight.png" />
     <Content Include="Content\Player.png" />
     <Content Include="Content\Start Tower.png" />
+    <Content Include="Content\Winner.png" />
+    <Content Include="Content\Winning Track.wav" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +87,10 @@
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
     <None Include="Content\SimpleSpriteFont.spritefont" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

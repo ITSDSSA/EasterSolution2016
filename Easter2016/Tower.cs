@@ -8,29 +8,34 @@ namespace Easter2016
 {
     class Tower : SimpleSprite
     {
-        float _damage;
+        
+        int health = 100;
 
         public Tower(Game g, string SpriteName, Vector2 StartPosition) : base(g,SpriteName,StartPosition)
         {
             Active = true;
-
+            AttachHealthBar(Vector2.Zero);
         }
 
-        public float Damage
+        public int Health
         {
             get
             {
-                return _damage;
+                return health;
             }
 
             set
             {
-                _damage = value;
+                health = value;
             }
         }
 
         public override void Update(GameTime gameTime)
         {
+            if(hbar != null)
+            {
+                hbar.health = Health;
+            }
             
         }
 

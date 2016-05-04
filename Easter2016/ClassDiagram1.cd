@@ -42,13 +42,6 @@
       <FileName>SimpleSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Easter2016.SimpleSpriteManager">
-    <Position X="4.75" Y="1" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAQAAIAIBQAAAAAQAmAIAQAAAAAAAAQBAAAAAAAACQQ=</HashCode>
-      <FileName>SimpleSpriteManager.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Easter2016.Tower">
     <Position X="0.5" Y="4.5" Width="1.5" />
     <Compartments>
@@ -72,6 +65,13 @@
     <TypeIdentifier>
       <HashCode>AAQAAAgBACAAAgBAAAAAAAQAEAAAAgQAAAAAAAAAAAA=</HashCode>
       <FileName>TimedSprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Easter2016.SimpleSpriteManager">
+    <Position X="4.75" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAgIAIhQAACCAQAmAIAQAAACAAAAQBAAAAAAAACSQ=</HashCode>
+      <FileName>SimpleSpriteManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

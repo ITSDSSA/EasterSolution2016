@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Helpers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,9 @@ namespace Easter2016
         private string name;
         protected float speed = 2.0f;
         Guid id = Guid.NewGuid();
+
+        public HealthBar hbar = null;
+
         public Guid Id
         {
             get
@@ -82,7 +86,7 @@ namespace Easter2016
             }
         }
 
-        protected Vector2 Currentposition
+        public Vector2 Currentposition
         {
             get
             {
@@ -145,7 +149,11 @@ namespace Easter2016
                 return true;
             return false;
         }
-       
+        public void AttachHealthBar(Vector2 offset)
+        {
+            hbar = new HealthBar(Game, Currentposition + offset);
+
+        }
         protected override void LoadContent()
         {
             base.LoadContent();
