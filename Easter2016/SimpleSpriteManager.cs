@@ -26,8 +26,9 @@ namespace Easter2016
         SimpleSprite WinnerScreen = null;
         SimpleSprite LooserScreen = null;
 
-        TimeSpan TimeOut = new TimeSpan(0, 0, 2);
-        TimeSpan zeroTime = new TimeSpan();
+        
+        TimeSpan targetTime = new TimeSpan(0, 0, 2);
+        TimeSpan counter = new TimeSpan();
 
         // Icon Variables
         Vector2 IconBasePosition = new Vector2(20, 20);
@@ -167,7 +168,7 @@ namespace Easter2016
                         Game.Components.Remove(enemy);
                         _blackKnights.Remove(enemy);
                         // update the health of the player and the player healthbar
-                        playerTower.Health -= 20;
+                        playerTower.Health -= 100;
                         if (playerTower.Health < 1)
                         {
                             Winner = false;
@@ -198,6 +199,7 @@ namespace Easter2016
             LoadedGameContent.Textures.Add("Icon", Game.Content.Load<Texture2D>("mini Black Knight"));
             LoadedGameContent.Textures.Add("Background", Game.Content.Load<Texture2D>("Background scene2"));
             LoadedGameContent.Textures.Add("Winner", Game.Content.Load<Texture2D>("Winner"));
+            LoadedGameContent.Textures.Add("Looser", Game.Content.Load<Texture2D>("looser"));
 
             LoadedGameContent.Fonts.Add("SimpleSpriteFont", Game.Content.Load<SpriteFont>("SimpleSpriteFont"));
             _audioPlayer = LoadedGameContent.Sounds["backing"].CreateInstance();
@@ -221,7 +223,7 @@ namespace Easter2016
                 .Where(s => !s.Stopped() && s.Name == "cannonball").ToList();
             // Get the active enemies
             var enemies = Game.Components.OfType<SimpleSprite>()
-                .Where(s => !s.Stopped() && s.Name == "Black Knight").ToList();
+                .Where(s => s.Active && s.Name == "Black Knight").ToList();
 
             // check collisions between cannon balls and enemies
             foreach (var b in activeCannonBalls)
@@ -292,20 +294,20 @@ namespace Easter2016
             switch (currentGameState)
             {
                 case GameState.PLAYING:
-                if (!TargetReached)
-                    {
+                //if (!TargetReached)
+                //    {
                         TimePassed = gameTime.TotalGameTime;
                         //checkTimedObjects();
                         MonitorCannonBalls();
                         monitorKnights();
-                        currentGameState = GameState.PLAYING;
-                    }
+                    //}
                     break;
                 case GameState.LOST:
                     loose();
                     break;
                 case GameState.WON:
-                    playTargetReached();
+                    
+                    playTargetReached(gameTime);
                     break;
                 case GameState.OVER:
                     Game.Exit();
@@ -316,7 +318,7 @@ namespace Easter2016
             base.Update(gameTime);
         }
 
-        private void playTargetReached()
+        private void playTargetReached(GameTime updateTime)
         {
             // If we have reached the target then display the 
             if(WinnerScreen == null)
@@ -337,31 +339,45 @@ namespace Easter2016
                 Game.Components.Remove(s);
 
             // No Icon activated and Icons not dealth with
-            if (CurrentIcon == null && Icons.Count > 0)
+            if (Icons.Count > 0)
             {
-                CurrentIcon = (SimpleSprite)Icons.Dequeue();
-                Vector2 target = new Vector2(0,
-                                    GraphicsDevice.Viewport.Height
-                                            - LoadedGameContent.Textures["End Tower"].Height
-                                    );
-                CurrentIcon.Path.Push(target);
-                CurrentIcon.Path.Push(new Vector2(200, 400));
-                CurrentIcon.followPath();
+                if ((counter += updateTime.ElapsedGameTime) >= targetTime)
+                {
+                    counter = new TimeSpan();
+                    CurrentIcon = (SimpleSprite)Icons.Dequeue();
+                    Vector2 target = new Vector2(0,
+                                        GraphicsDevice.Viewport.Height
+                                                - LoadedGameContent.Textures["End Tower"].Height
+                                        );
+                    CurrentIcon.Path.Push(target);
+                    CurrentIcon.Path.Push(new Vector2(200, 400));
+                    CurrentIcon.followPath();
+                }
             }
-            else if (CurrentIcon != null && CurrentIcon.Stopped())
-            {
-                SimpleSprite removalitem = Game.Components.OfType<SimpleSprite>()
-                    .Where(s => s.Id == CurrentIcon.Id).FirstOrDefault();
-                if (removalitem != null) { Game.Components.Remove(removalitem); }
-                CurrentIcon = null;
-            }
+            // Remove all the Icons that have reached their destination
+            // They are stopped and not in the Icon Queue
+            List<SimpleSprite> removalitems = Game.Components.OfType<SimpleSprite>()
+                    .Where(s => s.Stopped() && s.Name == "Icon" && !Icons.Contains(s)).ToList();
+
+            foreach (var item in removalitems)
+                Game.Components.Remove(item); 
+
+            //else if (CurrentIcon != null && CurrentIcon.Stopped())
+            //{
+            //    SimpleSprite removalitem = Game.Components.OfType<SimpleSprite>()
+            //        .Where(s => s.Id == CurrentIcon.Id).FirstOrDefault();
+            //    if (removalitem != null) { Game.Components.Remove(removalitem); }
+            //    CurrentIcon = null;
+
             // Check for End Game State when all the Icons have made it home and the music has finished
-            else if (Icons.Count < 1 && _audioPlayer.State == SoundState.Stopped)
-            {
-                // end of procession marks and end of Audio play marks
-                currentGameState = GameState.OVER;
-                GameOver = true;
-            }
+            if (Icons.Count < 1 && _audioPlayer.State == SoundState.Stopped)
+                {
+                    // end of procession marks and end of Audio play marks
+                    currentGameState = GameState.OVER;
+                    GameOver = true;
+                }
+            //}
+             
         }
 
         private void checkTimedObjects()
